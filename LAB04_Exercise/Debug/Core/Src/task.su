@@ -1,0 +1,7 @@
+task.c:10:6:System_Initialization	8	static
+task.c:17:6:taskA	8	static
+task.c:20:6:taskB	8	static
+task.c:23:6:taskC	8	static
+task.c:26:6:taskD	8	static
+task.c:29:6:taskE	8	static
+task.c:32:6:taskF	8	static
