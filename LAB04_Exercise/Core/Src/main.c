@@ -104,7 +104,8 @@ int main(void)
   SCH_Add_Task(taskD, 3000, 2000);
   SCH_Add_Task(taskE, 5000, 0);
 
-  SCH_Add_Task(taskF, 0, 50);
+  SCH_Add_Task(getKeyInput, 0, 10);
+  SCH_Add_Task(taskF, 0, 10);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -244,7 +245,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //		counter = 0;
 //		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 //	}
-	getKeyInput();
+	//getKeyInput();
 }
 /* USER CODE END 4 */
 

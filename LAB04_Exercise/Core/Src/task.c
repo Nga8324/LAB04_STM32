@@ -12,6 +12,7 @@ void System_Initialization(){
 	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(LED_BUTTON_GPIO_Port, LED_BUTTON_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(Button1_GPIO_Port, Button1_Pin, GPIO_PIN_SET);
 }
 void taskA(){
