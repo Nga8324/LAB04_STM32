@@ -10,13 +10,14 @@
 
 #include <stdint.h>
 #define TICK 			10
-#define RETURN_ERROR 	1
-#define RETURN_NORMAL 	0
+#define RETURN_ERROR 	0
+#define RETURN_NORMAL 	1
 typedef struct{
-	void (*pTask)(void);		//con trỏ gọi đến task khi trừ delay + period
+	void (*pTask)(void);		//Ko co ham nao thi gan bang NULL
 	uint32_t 	Delay;
-	uint32_t	Period;
-	uint8_t		RunMe;			// Số lần nhiệm vụ thực thi
+	uint32_t	Period;			// 0: one-shot task
+	uint8_t		RunMe;			// incremented when task is execute
+								// flag: run if > 0
 
 	uint32_t	TaskID;			// Hiện thực tác vụ
 }sTasks;

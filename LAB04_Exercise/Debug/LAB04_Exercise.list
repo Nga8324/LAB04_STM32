@@ -723,7 +723,7 @@ void SCH_Update(void) {
  80004e0:	681b      	ldr	r3, [r3, #0]
  80004e2:	2b00      	cmp	r3, #0
  80004e4:	d131      	bne.n	800054a <SCH_Update+0x9a>
-				SCH_tasks_G[i].RunMe ++;
+				SCH_tasks_G[i].RunMe ++;			//flag
  80004e6:	79fa      	ldrb	r2, [r7, #7]
  80004e8:	4927      	ldr	r1, [pc, #156]	; (8000588 <SCH_Update+0xd8>)
  80004ea:	4613      	mov	r3, r2
@@ -777,7 +777,7 @@ void SCH_Update(void) {
  8000546:	6019      	str	r1, [r3, #0]
  8000548:	e011      	b.n	800056e <SCH_Update+0xbe>
 				}
-			}else {
+			}else {									//Delay > 0
 				SCH_tasks_G[i].Delay --;
  800054a:	79fa      	ldrb	r2, [r7, #7]
  800054c:	490e      	ldr	r1, [pc, #56]	; (8000588 <SCH_Update+0xd8>)
@@ -829,6 +829,8 @@ unsigned char SCH_Add_Task(void (*pFunction)(),  unsigned int DELAY,  unsigned i
 	unsigned char i = 0;
  8000598:	2300      	movs	r3, #0
  800059a:	75fb      	strb	r3, [r7, #23]
+
+	//find a gap
 	while ((SCH_tasks_G[i].pTask != 0) && (i < SCH_MAX_TASKS)) {
  800059c:	e002      	b.n	80005a4 <SCH_Add_Task+0x18>
 		i++;
@@ -850,7 +852,8 @@ unsigned char SCH_Add_Task(void (*pFunction)(),  unsigned int DELAY,  unsigned i
  80005ba:	2b27      	cmp	r3, #39	; 0x27
  80005bc:	d9ef      	bls.n	800059e <SCH_Add_Task+0x12>
 	}
-	// Khong tim thay vi tri trong
+
+	// Not find gap
 	if (i == SCH_MAX_TASKS) {
  80005be:	7dfb      	ldrb	r3, [r7, #23]
  80005c0:	2b28      	cmp	r3, #40	; 0x28
@@ -911,7 +914,7 @@ unsigned char SCH_Add_Task(void (*pFunction)(),  unsigned int DELAY,  unsigned i
  8000624:	701a      	strb	r2, [r3, #0]
 
 	//SCH_tasks_G[i].TaskID = i; // Luu giu vi tri he thong
-	return i;
+	return i;					//Return the position
  8000626:	7dfb      	ldrb	r3, [r7, #23]
 }
  8000628:	4618      	mov	r0, r3
@@ -1038,7 +1041,7 @@ unsigned char SCH_Delete_Task(uint32_t ID) {
  80006f0:	d901      	bls.n	80006f6 <SCH_Delete_Task+0x26>
 		 //Error_code_G = ERROR_SCH_CANNOT_DELETE_TASK
 		return RETURN_ERROR;
- 80006f2:	2301      	movs	r3, #1
+ 80006f2:	2300      	movs	r3, #0
  80006f4:	e027      	b.n	8000746 <SCH_Delete_Task+0x76>
 	}
 	SCH_tasks_G[ID].pTask = 0x0000;
@@ -1085,7 +1088,7 @@ unsigned char SCH_Delete_Task(uint32_t ID) {
  8000740:	2200      	movs	r2, #0
  8000742:	701a      	strb	r2, [r3, #0]
 	return RETURN_NORMAL; // return status
- 8000744:	2300      	movs	r3, #0
+ 8000744:	2301      	movs	r3, #1
 }
  8000746:	4618      	mov	r0, r3
  8000748:	370c      	adds	r7, #12

@@ -23,11 +23,11 @@ void SCH_Update(void) {
 	for (i = 0; i < SCH_MAX_TASKS; i++) {
 		if (SCH_tasks_G[i].pTask) {
 			if (SCH_tasks_G[i].Delay <= 0) {
-				SCH_tasks_G[i].RunMe ++;
+				SCH_tasks_G[i].RunMe ++;			//flag
 				if (SCH_tasks_G[i].Period) {	 	// Co lap
 					SCH_tasks_G[i].Delay = SCH_tasks_G[i].Period;
 				}
-			}else {
+			}else {									//Delay > 0
 				SCH_tasks_G[i].Delay --;
 			}
 		}
@@ -36,10 +36,13 @@ void SCH_Update(void) {
 
 unsigned char SCH_Add_Task(void (*pFunction)(),  unsigned int DELAY,  unsigned int PERIOD) {
 	unsigned char i = 0;
+
+	//find a gap
 	while ((SCH_tasks_G[i].pTask != 0) && (i < SCH_MAX_TASKS)) {
 		i++;
 	}
-	// Khong tim thay vi tri trong
+
+	// Not find gap
 	if (i == SCH_MAX_TASKS) {
 		//Error_code_G=ERROR_SCH_TOO_MANY_TASKS;
 		return SCH_MAX_TASKS;
@@ -50,7 +53,7 @@ unsigned char SCH_Add_Task(void (*pFunction)(),  unsigned int DELAY,  unsigned i
 	SCH_tasks_G[i].RunMe = 0;
 
 	//SCH_tasks_G[i].TaskID = i; // Luu giu vi tri he thong
-	return i;
+	return i;					//Return the position
 }
 
 void SCH_Dispatch_Tasks(void) {
