@@ -93,25 +93,25 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   System_Initialization();
-  SCH_Init();
+  SCH_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Add_Task(taskA, 0, 500);
-  SCH_Add_Task(taskB, 1000, 1000);
-  SCH_Add_Task(taskC, 2000, 1500);
-  SCH_Add_Task(taskD, 3000, 2000);
-  SCH_Add_Task(taskE, 5000, 0);
+  SCH_addTask(taskA, 0, 500, 0);
+  SCH_addTask(taskB, 1000, 1000, 1);
+  SCH_addTask(taskC, 2000, 1500, 2);
+  SCH_addTask(taskD, 3000, 2000, 3);
+  SCH_addTask(taskE, 5000, 0, 4);
 
-  SCH_Add_Task(getKeyInput, 0, 10);
-  SCH_Add_Task(taskF, 0, 10);
+//  SCH_Add_Task(getKeyInput, 0, 10);
+//  SCH_Add_Task(taskF, 0, 10);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  SCH_Dispatch_Tasks(); // check flag
+	  SCH_dispatchTask();// check flag
 //	  if(isButton1Pressed()){
 //		  HAL_GPIO_TogglePin(LED_BUTTON_GPIO_Port, LED_BUTTON_Pin);
 //	  }
@@ -239,7 +239,7 @@ static void MX_GPIO_Init(void)
 //int counter = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	SCH_Update();
+	SCH_updateTask() ;
 //	counter++;
 //	if(counter > 100){
 //		counter = 0;

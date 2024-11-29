@@ -5,35 +5,33 @@
  *      Author: Admin
  */
 
-#ifndef INC_SCHEDULER_H_
-#define INC_SCHEDULER_H_
+#ifndef SCHEDULER_H
+#define SCHEDULER_H
 
-#include <stdint.h>
-#define TICK 			10
-#define RETURN_ERROR 	0
-#define RETURN_NORMAL 	1
-typedef struct{
-	void (*pTask)(void);		//Ko co ham nao thi gan bang NULL
-	uint32_t 	Delay;
-	uint32_t	Period;			// 0: one-shot task
-	uint8_t		RunMe;			// incremented when task is execute
-								// flag: run if > 0
+#include <stddef.h>  // Để sử dụng NULL
+#include <stdint.h>  // Để sử dụng các kiểu dữ liệu uint8_t, uint32_t
 
-	uint32_t	TaskID;			// Hiện thực tác vụ
-}sTasks;
+#define TICK    10
 
-#define SCH_MAX_TASKS		40
-void SCH_Init(void);
+typedef struct Node {
+    void (*pTask)();
+    int delay;
+    int period;
+    int ID;
+    struct Node *next;
+} Node;
 
-unsigned char  SCH_Add_Task (void (*pFunction)(),
-							unsigned int DELAY,
-							unsigned int PERIOD);
+typedef struct {
+    Node *head;
+    Node *tail;
+    int size;
+} SCH_task;
 
-void SCH_Update(void);			// Như timerrun
+void SCH_init(void);
+void SCH_addTask(void (*pFunction)(), int DELAY, int PERIOD, int ID);
+void SCH_updateTask(void);
+void SCH_dispatchTask(void);
+void SCH_deleteHead(void);
+void SCH_deleteTask(int ID);
 
-void SCH_Dispatch_Tasks(void);	// Kiểm tra 1 flag, gọi trong while(1)
-
-unsigned char SCH_Delete_Task(uint32_t ID);
-//void SCH_Go_To_Sleep(void);
-
-#endif /* INC_SCHEDULER_H_ */
+#endif
